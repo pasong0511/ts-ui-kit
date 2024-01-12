@@ -1,0 +1,153 @@
+:root {
+    --calendar-size-width: 700px;
+    --calendar-size-hight: 200px;
+}
+
+.calendar {
+    width: var(--calendar-size-width);
+    height: var(--calendar-size-hight);
+    /* background-color: rgb(215, 233, 255); */
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+
+.calendar-week,
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.day.thisMonth {
+    color: black;
+}
+
+.day.not-thisMonth {
+    color: rgb(175, 175, 175);
+}
+
+.day.thisMonth.sunday {
+    color: tomato;
+}
+
+.day.thisMonth.saturday {
+    color: rgb(85, 40, 246);
+}
+
+.day.thisMonth.holiday {
+    color: tomato;
+}
+
+.today-mark::before {
+    content: "•";
+    font-size: 20px;
+    color: #27ae60;
+}
+
+.grid-cell-header {
+    display: flex;
+}
+
+.previous-month {
+    transform: scaleX(-1);
+}
+
+.button_reset {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background: none;
+    color: inherit;
+    cursor: default;
+    font: inherit;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    border: none; /* 테두리 제거 */
+}
+
+.nav_button:hover {
+    background-color: rgba(55, 53, 47, 0.08);
+}
+
+.label {
+    /* display: flex; */
+    align-items: center;
+    flex-shrink: 0;
+    min-width: 0px;
+    /* max-width: 100%; */
+    height: 20px;
+    border-radius: 3px;
+    padding-left: 6px;
+    padding-right: 6px;
+    font-size: 14px;
+    line-height: 120%;
+    color: rgb(76, 35, 55);
+    background: rgb(245, 224, 233);
+    margin: 0px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.multitag {
+    border-radius: 6px;
+    background: white;
+    backdrop-filter: none;
+    position: relative;
+    max-width: calc(100vw - 24px);
+    box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px,
+        rgba(15, 15, 15, 0.1) 0px 3px 6px, rgba(15, 15, 15, 0.2) 0px 9px 24px;
+    overflow: visible;
+    width: 541px;
+}
+
+.multitag > .multitag-header {
+    flex-shrink: 0;
+    max-height: 240px;
+    box-shadow: rgba(55, 53, 47, 0.16) 0px -1px inset;
+    overflow: hidden auto;
+    margin-right: 0px;
+    margin-bottom: 0px;
+}
+
+.multitag > .multitag-body {
+    flex-grow: 1;
+    min-height: 0px;
+    overflow: hidden auto;
+    margin-right: 0px;
+    margin-bottom: 0px;
+}
+
+.more-btn {
+    margin-left: auto;
+    margin-right: 12px;
+    min-width: 0px;
+    flex-shrink: 0;
+}
+
+.into-butn-img {
+    user-select: none;
+    cursor: pointer;
+    opacity: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 4px;
+    width: 24px;
+    height: 24px;
+    margin-right: -6px;
+}
+
+.dots {
+    width: 14px;
+    height: 14px;
+    display: block;
+    fill: rgba(55, 53, 47, 0.45);
+    flex-shrink: 0;
+}
