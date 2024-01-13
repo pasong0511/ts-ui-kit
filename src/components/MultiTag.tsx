@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 import MultiTagNode from "./MultiTagNode";
 
 interface IMultiTagNode {
@@ -14,6 +14,8 @@ export default function MultiTag() {
         { id: 3, label: "Item 3" },
     ]);
     const [value, setValue] = useState("");
+
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setValue(e.target.value);
@@ -41,6 +43,9 @@ export default function MultiTag() {
                     setNodes(items);
                 }
                 break;
+        }
+        if (inputRef.current) {
+            inputRef.current.focus();
         }
 
         setValue("");
@@ -81,6 +86,7 @@ export default function MultiTag() {
                     ))}
                 </div>
                 <input
+                    ref={inputRef}
                     value={value}
                     onChange={handleChange}
                     onKeyDown={handleKeyDown}
