@@ -55,6 +55,10 @@ export default function DragWrapper({
         }
     };
 
+    useEffect(() => {
+        setCurrentItems(dragList);
+    }, [dragList]);
+
     return (
         <DndProvider backend={HTML5Backend}>
             {currentItems.map((item, index) => (
