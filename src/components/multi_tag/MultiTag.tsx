@@ -9,9 +9,11 @@ import MultiTagLabel from "./MultiTagLabel";
 import DragWrapper from "../drag_and_drop/DragWrapper";
 
 import { colorList } from "../../constants/color";
-import LayerWrapper from "../modal/LayerWrapper";
+import LayerWrapper from "../layer/LayerWrapper";
 
-interface IMultiTagItem {
+import TagLabelEdit from "./TagLabelEdit";
+
+export interface IMultiTagItem {
     id: number;
     label: string;
     color?: string;
@@ -24,6 +26,7 @@ export default function MultiTag() {
         { id: 3, label: "Item 3" },
     ]);
     const [value, setValue] = useState("");
+    const [select, setSelect] = useState<IMultiTagItem>(null);
 
     const inputRef = useRef<HTMLInputElement>(null);
     let layerRef: React.RefObject<any> = React.createRef();
@@ -50,6 +53,11 @@ export default function MultiTag() {
                 setDatas((prev) => [...prev, newDatas]);
                 break;
             case "delete":
+                if (items) {
+                    setDatas(items);
+                }
+                break;
+            case "update":
                 if (items) {
                     setDatas(items);
                 }
@@ -88,6 +96,20 @@ export default function MultiTag() {
         setData({ items: newArray, type: "delete" });
     };
 
+    const handelEdit = (item) => {
+        const updateItem = datas.map((data) => {
+            if (data.id === item.id) {
+                return {
+                    ...item,
+                    label: item.label,
+                };
+            }
+            return data;
+        });
+        setData({ items: updateItem, type: "update" });
+        layerRef.current?.closeLayer();
+    };
+
     const handleBackspace = (e) => {
         const { selectionStart, selectionEnd, value } = e.nativeEvent.target;
         const isDraged = selectionStart !== selectionEnd;
@@ -101,8 +123,17 @@ export default function MultiTag() {
         }
     };
 
-    const handleEditButton = () => {
+    const handleEditButton = (item) => {
+        console.log("클릭", item);
+        if (item) {
+            setSelect(item);
+        }
         layerRef.current?.openLayer();
+    };
+
+    const handleModalClose = () => {
+        console.log("🥗🥗🥗🥗🥗모달 닫음");
+        setSelect(null);
     };
 
     const handleDragMove = (newList: IMultiTagItem[]) => {
@@ -170,7 +201,11 @@ export default function MultiTag() {
                                             <MultiTagLabel node={dragItem} />
                                             <div className="info-btn">
                                                 <button
-                                                    onClick={handleEditButton}
+                                                    onClick={() =>
+                                                        handleEditButton(
+                                                            dragItem
+                                                        )
+                                                    }
                                                 >
                                                     버튼
                                                 </button>
@@ -191,30 +226,12 @@ export default function MultiTag() {
                     </div>
                 </div>
             </div>
-            <LayerWrapper ref={layerRef}>
-                <div style={{ width: "220" }}>
-                    <div style={{ display: "flex", flexDirection: "column" }}>
-                        <input />
-                        <button>삭제</button>
-                    </div>
-                    <div>
-                        <div>색</div>
-
-                        {colorList.map((item) => (
-                            <div
-                                style={{
-                                    display: "flex",
-                                }}
-                            >
-                                <div
-                                    className="color-box"
-                                    style={{ background: `#${item.color}` }}
-                                ></div>
-                                <div>{item.name}</div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
+            <LayerWrapper ref={layerRef} onClose={handleModalClose}>
+                <TagLabelEdit
+                    items={colorList}
+                    select={select}
+                    onChange={handelEdit}
+                />
             </LayerWrapper>
         </>
     );
