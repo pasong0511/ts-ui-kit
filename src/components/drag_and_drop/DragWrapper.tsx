@@ -101,8 +101,6 @@ const DraggableItem: React.FC<IDraggableItem> = ({
         dragSectionName,
     });
 
-    console.log(ref, isDragging);
-
     //children으로 넘겨준 dom 렌더링
     return <>{itemRenderer(dragItem, ref, isDragging)}</>;
 };

@@ -94,7 +94,7 @@
     text-overflow: ellipsis;
 }
 
-.label-remove {
+.label-delete {
     display: flex;
     align-items: center;
     flex-shrink: 1;
@@ -185,4 +185,27 @@ button {
     background: none; /* 배경 제거 */
     border: none; /* 테두리 제거 */
     padding: 0; /* 버튼 내부 여백 제거 (선택적) */
+}
+
+.multitag-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    background: rgba(242, 241, 238, 0.6);
+    cursor: text;
+    overflow: auto;
+    width: 100%;
+    min-height: 34px;
+    font-size: 14px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+}
+
+.color-box {
+    width: 18px;
+    height: 18px;
+    background: rgb(227, 226, 224);
+    color: rgb(50, 48, 44);
+    box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px inset;
+    border-radius: 4px;
 }

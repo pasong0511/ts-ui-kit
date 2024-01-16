@@ -1,10 +1,23 @@
-export default function MultiTagNode({ node, onDelete }: any) {
+interface IMultiTagLabelProps {
+    node: any;
+    onDelete?: (node: any) => void;
+}
+
+export default function MultiTagLabel({ node, type, onDelete }: any) {
+    const className = [];
+
+    if (type === "delete") {
+        className.push("label-delete");
+    }
+
     const onClick = () => {
-        onDelete(node);
+        if (onDelete) {
+            onDelete(node);
+        }
     };
-    console.log(node);
+
     return (
-        <div className="label-remove">
+        <div className={`label ${className.join(" ")}`}>
             <div>{node.label}</div>
             <button onClick={onClick}>
                 <svg
