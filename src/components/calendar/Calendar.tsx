@@ -1,10 +1,10 @@
 import classnames from "classnames";
 import { useEffect, useState } from "react";
-import { WEEK_LIST_KR } from "../constants/calendarConstants";
-import { IInfomationViewDate, IHolidayDic } from "../types/date";
-import { fetchHolidyDate } from "../utils/api";
-import { getCreateDateList } from "../utils/createDate";
-import { Week } from "../enums/dateEnums";
+import { WEEK_LIST_KR } from "../../constants/calendarConstants";
+import { IInfomationViewDate, IHolidayDic } from "../../types/date";
+import { fetchHolidyDate } from "../../utils/api";
+import { getCreateDateList } from "../../utils/createDate";
+import { Week } from "../../enums/dateEnums";
 
 interface ICalendarProps {
     /**공휴일 사용 여부*/

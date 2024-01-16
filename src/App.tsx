@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import Calendar from "./components/Calendar";
+import Calendar from "./components/calendar/Calendar";
 import MultiTag from "./components/multi_tag/MultiTag";
 
 function App() {
