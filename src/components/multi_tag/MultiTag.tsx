@@ -5,25 +5,26 @@ import React, {
     useRef,
     useState,
 } from "react";
-import MultiTagLabel from "./MultiTagLabel";
+import MultiTagLabel, { TAG_LABEL_TYPE } from "./MultiTagLabel";
 import DragWrapper from "../drag_and_drop/DragWrapper";
 
 import { colorList } from "../../constants/color";
 import LayerWrapper from "../layer/LayerWrapper";
 
 import TagLabelEdit from "./TagLabelEdit";
+import { getRandomColor } from "../../utils/getRandomColor";
 
 export interface IMultiTagItem {
     id: number;
     label: string;
-    color?: string;
+    color: string;
 }
 
 export default function MultiTag() {
     const [datas, setDatas] = useState<IMultiTagItem[]>([
-        { id: 1, label: "Item 1" },
-        { id: 2, label: "Item 2" },
-        { id: 3, label: "Item 3" },
+        { id: 1, label: "Item 1", color: "E3E2E0" },
+        { id: 2, label: "Item 2", color: "E3E2E0" },
+        { id: 3, label: "Item 3", color: "E3E2E0" },
     ]);
     const [value, setValue] = useState("");
     const [select, setSelect] = useState<IMultiTagItem>(null);
@@ -46,9 +47,11 @@ export default function MultiTag() {
     }) => {
         switch (type) {
             case "create":
+                const color = getRandomColor().color;
                 const newDatas = {
                     id: Math.max(...datas.map((data) => data.id)) + 1,
                     label: value,
+                    color: color,
                 };
                 setDatas((prev) => [...prev, newDatas]);
                 break;
@@ -150,7 +153,7 @@ export default function MultiTag() {
                             <MultiTagLabel
                                 node={node}
                                 onDelete={handelDelete}
-                                type={"delete"}
+                                type={TAG_LABEL_TYPE.DELETE}
                             />
                         ))}
                     </div>

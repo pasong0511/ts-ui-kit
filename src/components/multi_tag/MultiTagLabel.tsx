@@ -1,12 +1,21 @@
 interface IMultiTagLabelProps {
     node: any;
+    type?: string;
     onDelete?: (node: any) => void;
 }
 
-export default function MultiTagLabel({ node, type, onDelete }: any) {
+export enum TAG_LABEL_TYPE {
+    DELETE = "delete",
+}
+
+export default function MultiTagLabel({
+    node,
+    type,
+    onDelete,
+}: IMultiTagLabelProps) {
     const className = [];
 
-    if (type === "delete") {
+    if (type === TAG_LABEL_TYPE.DELETE) {
         className.push("label-delete");
     }
 
@@ -17,7 +26,10 @@ export default function MultiTagLabel({ node, type, onDelete }: any) {
     };
 
     return (
-        <div className={`label ${className.join(" ")}`}>
+        <div
+            className={`label ${className.join(" ")}`}
+            style={{ background: `#${node.color}` }}
+        >
             <div>{node.label}</div>
             <button onClick={onClick}>
                 <svg
