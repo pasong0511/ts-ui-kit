@@ -30,13 +30,10 @@ export default function MultiTag() {
     ]);
     const [select, setSelect] = useState<IMultiTagItem>(null);
     const [value, setValue] = useState("");
+    const [labelColor, setLabelColor] = useState<string>("");
 
     const inputRef = useRef<HTMLInputElement>(null);
     let layerRef: React.RefObject<any> = React.createRef();
-
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setValue(e.target.value);
-    };
 
     const setData = ({
         item,
@@ -49,11 +46,10 @@ export default function MultiTag() {
     }) => {
         switch (type) {
             case SET_DATA_TYPE.CREATE:
-                const color = getRandomColor().color;
                 const newDatas = {
                     id: Math.max(...datas.map((data) => data.id)) + 1,
                     label: value,
-                    color: color,
+                    color: labelColor,
                 };
                 setDatas((prev) => [...prev, newDatas]);
                 break;
@@ -73,6 +69,16 @@ export default function MultiTag() {
         }
 
         setValue("");
+    };
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        //라벨의 컬러는 onChange가 처음 발생 했을 때 생성한다.
+        if (value.length === 0) {
+            const color = getRandomColor().color;
+            setLabelColor(color);
+        }
+
+        setValue(e.target.value);
     };
 
     const handleClickLine = () => {
@@ -148,6 +154,10 @@ export default function MultiTag() {
     const handleDragEnd = (newList: IMultiTagItem[]) => {
         //console.log("드래그 종료", newList);
     };
+
+    useEffect(() => {
+        console.log("labelColor", labelColor);
+    }, [labelColor]);
 
     return (
         <>
@@ -225,7 +235,12 @@ export default function MultiTag() {
                             {value && (
                                 <>
                                     <span>생성</span>
-                                    <label className="label">{value}</label>
+                                    <label
+                                        className="label"
+                                        style={{ background: `#${labelColor}` }}
+                                    >
+                                        {value}
+                                    </label>
                                 </>
                             )}
                         </div>
