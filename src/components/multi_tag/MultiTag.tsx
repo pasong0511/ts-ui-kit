@@ -96,10 +96,13 @@ export default function MultiTag() {
         }
     };
 
-    const handelDelete = (node: IMultiTagItem) => {
+    const handelDelete = (node: IMultiTagItem, isLayerOpen = false) => {
         const { id } = node;
         const filterItems = datas.filter((node) => node.id !== id);
         setData({ items: filterItems, type: SET_DATA_TYPE.DELETE });
+
+        if (layerRef?.current.getLayerState() && isLayerOpen)
+            layerRef.current?.closeLayer();
     };
 
     const handelDeleteTail = () => {

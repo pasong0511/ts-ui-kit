@@ -1,7 +1,7 @@
 interface IMultiTagLabelProps {
     node: any;
     type?: string;
-    onDelete?: (node: any) => void;
+    onDelete?: (node: any, isLayerOpen?: boolean) => void;
 }
 
 export enum TAG_LABEL_TYPE {
