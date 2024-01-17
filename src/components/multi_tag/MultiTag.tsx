@@ -13,6 +13,7 @@ import LayerWrapper from "../layer/LayerWrapper";
 
 import TagLabelEdit from "./TagLabelEdit";
 import { getRandomColor } from "../../utils/getRandomColor";
+import { EVENT_KEY } from "../../enums/event";
 
 export interface IMultiTagItem {
     id: number;
@@ -78,11 +79,11 @@ export default function MultiTag() {
     };
 
     const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter") {
+        if (e.key === EVENT_KEY.Enter) {
             setData({ type: "create" });
             return;
         }
-        if (e.key === "Backspace") {
+        if (e.key === EVENT_KEY.Backspace) {
             handleBackspace(e);
             return;
         }

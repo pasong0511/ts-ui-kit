@@ -1,5 +1,6 @@
 import { ChangeEvent, useEffect, useRef, useState, KeyboardEvent } from "react";
 import { IMultiTagItem } from "./MultiTag";
+import { EVENT_KEY } from "../../enums/event";
 
 export interface IColorList {
     order: number;
@@ -28,7 +29,7 @@ function TagLabelEdit({
     };
 
     const handleBlur = (e: any) => {
-        if (e.key === "Enter") {
+        if (e.key === EVENT_KEY.Enter) {
             if (select.label !== value) {
                 const newItem = {
                     ...select,
@@ -40,7 +41,7 @@ function TagLabelEdit({
     };
 
     const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter") {
+        if (e.key === EVENT_KEY.Enter) {
             if (select.label !== value) {
                 const newItem = {
                     ...select,
