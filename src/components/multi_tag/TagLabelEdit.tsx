@@ -11,10 +11,12 @@ function TagLabelEdit({
     items,
     select,
     onChange,
+    onDelete,
 }: {
     items: IColorList[];
     select: IMultiTagItem;
     onChange?: (item: any) => void;
+    onDelete: (item: any) => void;
 }) {
     const [value, setValue] = useState(select.label);
 
@@ -49,7 +51,9 @@ function TagLabelEdit({
         }
     };
 
-    console.log("선택..", select);
+    const handleDelete = () => {
+        onDelete(select);
+    };
 
     useEffect(() => {
         if (inputRef.current) {
@@ -69,7 +73,7 @@ function TagLabelEdit({
                     onBlur={handleBlur}
                     onKeyDown={handleKeyDown}
                 />
-                <button>삭제</button>
+                <button onClick={handleDelete}>삭제</button>
             </div>
             <div>
                 <div>색</div>

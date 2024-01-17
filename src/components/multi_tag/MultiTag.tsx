@@ -124,7 +124,6 @@ export default function MultiTag() {
     };
 
     const handleEditButton = (item) => {
-        console.log("클릭", item);
         if (item) {
             setSelect(item);
         }
@@ -132,7 +131,6 @@ export default function MultiTag() {
     };
 
     const handleModalClose = () => {
-        console.log("🥗🥗🥗🥗🥗모달 닫음");
         setSelect(null);
     };
 
@@ -231,6 +229,7 @@ export default function MultiTag() {
                     items={colorList}
                     select={select}
                     onChange={handelEdit}
+                    onDelete={handelDelete}
                 />
             </LayerWrapper>
         </>
