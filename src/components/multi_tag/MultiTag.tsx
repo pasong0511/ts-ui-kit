@@ -14,6 +14,7 @@ import LayerWrapper from "../layer/LayerWrapper";
 import TagLabelEdit from "./TagLabelEdit";
 import { getRandomColor } from "../../utils/getRandomColor";
 import { EVENT_KEY } from "../../enums/event";
+import { SET_DATA_TYPE } from "../../enums/data";
 
 export interface IMultiTagItem {
     id: number;
@@ -27,8 +28,8 @@ export default function MultiTag() {
         { id: 2, label: "Item 2", color: "E3E2E0" },
         { id: 3, label: "Item 3", color: "E3E2E0" },
     ]);
-    const [value, setValue] = useState("");
     const [select, setSelect] = useState<IMultiTagItem>(null);
+    const [value, setValue] = useState("");
 
     const inputRef = useRef<HTMLInputElement>(null);
     let layerRef: React.RefObject<any> = React.createRef();
@@ -44,10 +45,10 @@ export default function MultiTag() {
     }: {
         item?: IMultiTagItem;
         items?: IMultiTagItem[];
-        type: string;
+        type: SET_DATA_TYPE;
     }) => {
         switch (type) {
-            case "create":
+            case SET_DATA_TYPE.CREATE:
                 const color = getRandomColor().color;
                 const newDatas = {
                     id: Math.max(...datas.map((data) => data.id)) + 1,
@@ -56,18 +57,18 @@ export default function MultiTag() {
                 };
                 setDatas((prev) => [...prev, newDatas]);
                 break;
-            case "delete":
+            case SET_DATA_TYPE.DELETE:
                 if (items) {
                     setDatas(items);
                 }
                 break;
-            case "update":
+            case SET_DATA_TYPE.UPDATE:
                 if (items) {
                     setDatas(items);
                 }
                 break;
         }
-        if (inputRef.current) {
+        if (inputRef.current && !layerRef?.current.getLayerState()) {
             inputRef.current.focus();
         }
 
@@ -75,12 +76,12 @@ export default function MultiTag() {
     };
 
     const handleClickLine = () => {
-        setData({ type: "create" });
+        setData({ type: SET_DATA_TYPE.CREATE });
     };
 
     const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === EVENT_KEY.Enter) {
-            setData({ type: "create" });
+            setData({ type: SET_DATA_TYPE.CREATE });
             return;
         }
         if (e.key === EVENT_KEY.Backspace) {
@@ -92,15 +93,15 @@ export default function MultiTag() {
     const handelDelete = (node: IMultiTagItem) => {
         const { id } = node;
         const filterItems = datas.filter((node) => node.id !== id);
-        setData({ items: filterItems, type: "delete" });
+        setData({ items: filterItems, type: SET_DATA_TYPE.DELETE });
     };
 
     const handelDeleteTail = () => {
         const newArray = datas.slice(0, -1);
-        setData({ items: newArray, type: "delete" });
+        setData({ items: newArray, type: SET_DATA_TYPE.DELETE });
     };
 
-    const handelEdit = (item) => {
+    const handelEdit = (item: IMultiTagItem, isLayerOpen = false) => {
         const updateItem = datas.map((data) => {
             if (data.id === item.id) {
                 return {
@@ -110,12 +111,15 @@ export default function MultiTag() {
             }
             return data;
         });
-        setData({ items: updateItem, type: "update" });
-        layerRef.current?.closeLayer();
+        setSelect(item);
+        setData({ items: updateItem, type: SET_DATA_TYPE.UPDATE });
+
+        if (!isLayerOpen) layerRef.current?.closeLayer();
     };
 
-    const handleBackspace = (e) => {
-        const { selectionStart, selectionEnd, value } = e.nativeEvent.target;
+    const handleBackspace = (e: KeyboardEvent<HTMLInputElement>) => {
+        const target = e.nativeEvent.target as HTMLInputElement;
+        const { selectionStart, selectionEnd } = target;
         const isDraged = selectionStart !== selectionEnd;
 
         if (isDraged) {
@@ -127,7 +131,7 @@ export default function MultiTag() {
         }
     };
 
-    const handleEditButton = (item) => {
+    const handleEditButton = (item: IMultiTagItem) => {
         if (item) {
             setSelect(item);
         }
@@ -232,7 +236,7 @@ export default function MultiTag() {
                 <TagLabelEdit
                     items={colorList}
                     select={select}
-                    onChange={handelEdit}
+                    onEdit={handelEdit}
                     onDelete={handelDelete}
                 />
             </LayerWrapper>

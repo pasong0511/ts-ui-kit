@@ -1,6 +1,7 @@
 import { ChangeEvent, useEffect, useRef, useState, KeyboardEvent } from "react";
 import { IMultiTagItem } from "./MultiTag";
 import { EVENT_KEY } from "../../enums/event";
+import Select from "./Select";
 
 export interface IColorList {
     order: number;
@@ -11,17 +12,29 @@ export interface IColorList {
 function TagLabelEdit({
     items,
     select,
-    onChange,
+    onEdit,
     onDelete,
 }: {
     items: IColorList[];
     select: IMultiTagItem;
-    onChange?: (item: any) => void;
-    onDelete: (item: any) => void;
+    onEdit?: (item: IMultiTagItem, isLayerOpen?: boolean) => void;
+    onDelete: (item: IMultiTagItem) => void;
 }) {
     const [value, setValue] = useState(select.label);
+    const [colorSelect, setColorSelect] = useState<IColorList>(null);
 
     const inputRef = useRef<HTMLInputElement>(null);
+
+    const setColor = (item) => {
+        setColorSelect(item);
+
+        //데이터 업데이트
+        const newItem = {
+            ...select,
+            color: item.color,
+        };
+        onEdit(newItem, true);
+    };
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         //인풋에 있는 value값 변경
@@ -35,7 +48,7 @@ function TagLabelEdit({
                     ...select,
                     label: value,
                 };
-                onChange(newItem);
+                onEdit(newItem);
             }
         }
     };
@@ -47,7 +60,7 @@ function TagLabelEdit({
                     ...select,
                     label: value,
                 };
-                onChange(newItem);
+                onEdit(newItem);
             }
         }
     };
@@ -64,6 +77,10 @@ function TagLabelEdit({
         }
     }, []);
 
+    useEffect(() => {
+        console.log("🥞colorSelect", colorSelect);
+    }, [colorSelect]);
+
     return (
         <div style={{ width: "220" }}>
             <div style={{ display: "flex", flexDirection: "column" }}>
@@ -78,21 +95,7 @@ function TagLabelEdit({
             </div>
             <div>
                 <div>색</div>
-
-                {items.map((item) => (
-                    <div
-                        key={item.color}
-                        style={{
-                            display: "flex",
-                        }}
-                    >
-                        <div
-                            className="color-box"
-                            style={{ background: `#${item.color}` }}
-                        ></div>
-                        <div>{item.name}</div>
-                    </div>
-                ))}
+                <Select items={items} select={select} setItem={setColor} />
             </div>
         </div>
     );

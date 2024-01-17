@@ -9,6 +9,7 @@ import React, {
 export interface LayerWrapperHandles {
     openLayer: () => void;
     closeLayer: () => void;
+    getLayerState: () => void;
 }
 
 interface LayerWrapperProps {
@@ -29,6 +30,7 @@ const LayerWrapper = forwardRef<LayerWrapperHandles, LayerWrapperProps>(
                 //부모 컴포넌트에서 닫힘여부를 알기위해서 콜백 함수 추가
                 if (onClose) onClose();
             },
+            getLayerState: () => isOpen,
         }));
 
         // 외부 클릭 감지
