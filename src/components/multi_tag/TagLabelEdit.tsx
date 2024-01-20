@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useRef, useState, KeyboardEvent } from "react";
 import { IMultiTagItem } from "./MultiTag";
 import { EVENT_KEY } from "../../enums/event";
-import Select from "./Select";
+import ColorSelect from "./ColorSelect";
 import ModalWrapper from "../../modal/ModalWrapper";
 import React from "react";
 
@@ -27,7 +27,7 @@ function TagLabelEdit({
     const inputRef = useRef<HTMLInputElement>(null);
     let modalRef: React.RefObject<any> = React.createRef();
 
-    const setColor = (item) => {
+    const setColor = (item: IColorList) => {
         //데이터 업데이트
         const newItem = {
             ...select,
@@ -66,9 +66,6 @@ function TagLabelEdit({
     };
 
     const handleDelete = () => {
-        console.log("1313123");
-        //삭제 버튼을 누르는 경우 아래 실행
-        //onDelete(select);
         modalRef.current.openModal();
     };
 
@@ -103,7 +100,11 @@ function TagLabelEdit({
                 </div>
                 <div>
                     <div>색</div>
-                    <Select items={items} select={select} setItem={setColor} />
+                    <ColorSelect
+                        items={items}
+                        select={select}
+                        setItem={setColor}
+                    />
                 </div>
             </div>
             <ModalWrapper ref={modalRef}>

@@ -158,10 +158,6 @@ export default function MultiTag() {
         //console.log("드래그 종료", newList);
     };
 
-    useEffect(() => {
-        console.log("labelColor", labelColor);
-    }, [labelColor]);
-
     return (
         <>
             <div className="multitag">

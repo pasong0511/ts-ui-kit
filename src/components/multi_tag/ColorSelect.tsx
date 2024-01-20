@@ -1,5 +1,18 @@
-export default function Select({ items, select, setItem }) {
-    const handleClick = (item) => {
+import { IMultiTagItem } from "./MultiTag";
+import { IColorList } from "./TagLabelEdit";
+
+interface IColorSelectProps {
+    items: IColorList[];
+    select: IMultiTagItem;
+    setItem: (item: IColorList) => void;
+}
+
+export default function ColorSelect({
+    items,
+    select,
+    setItem,
+}: IColorSelectProps) {
+    const handleClick = (item: IColorList) => {
         setItem(item);
     };
     return (
