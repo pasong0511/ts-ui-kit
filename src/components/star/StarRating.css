@@ -1,0 +1,29 @@
+.star-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.star {
+    fill: none;
+    transition: fill 200ms;
+}
+
+.star-full {
+    fill: gray;
+}
+
+.star-filled .star-full {
+    fill: gold;
+}
+
+.star-half-filled .star-half {
+    fill: gold;
+    clip-path: polygon(
+        0 0,
+        50% 0,
+        50% 100%,
+        0% 100%
+    ); /* 절반만 채워진 별 모양 */
+}
