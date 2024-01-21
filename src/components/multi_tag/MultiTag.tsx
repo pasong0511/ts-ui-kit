@@ -165,6 +165,7 @@ export default function MultiTag() {
                     <div style={{ display: "flex" }}>
                         {datas.map((node) => (
                             <MultiTagLabel
+                                key={node.id}
                                 node={node}
                                 onDelete={handelDelete}
                                 type={TAG_LABEL_TYPE.DELETE}
