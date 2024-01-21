@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect, useRef, useState, KeyboardEvent } from "react";
 import { IMultiTagItem } from "./MultiTag";
 import { EVENT_KEY } from "../../enums/event";
 import ColorSelect from "./ColorSelect";
-import ModalWrapper from "../../modal/ModalWrapper";
+import ModalWrapper from "../modal/ModalWrapper";
 import React from "react";
 
 export interface IColorList {
