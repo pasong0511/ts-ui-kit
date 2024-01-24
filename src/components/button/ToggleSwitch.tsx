@@ -1,10 +1,11 @@
 import { useState } from "react";
 import "./ToggleSwitch.css"; //
 
-const ToggleSwitch = () => {
+const ToggleSwitch = ({ onClick }) => {
     const [isToggled, setIsToggled] = useState(false);
 
     const handleToggle = () => {
+        onClick();
         setIsToggled(!isToggled);
     };
 

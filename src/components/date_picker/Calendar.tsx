@@ -1,22 +1,26 @@
 import classnames from "classnames";
 import { useEffect, useState } from "react";
 import { WEEK_LIST_KR } from "../../constants/calendarConstants";
-import { IInfomationViewDate, IHolidayDic } from "../../types/date";
+import { IInfomationViewDate, IHolidayDic, IViewDate } from "../../types/date";
 import { fetchHolidyDate } from "../../utils/api";
 import { getCreateDateList } from "../../utils/createDate";
 import { Week } from "../../enums/dateEnums";
+import { getToday } from "./util";
 
-export default function Calendar() {
+interface ICalendar {
+    name: string;
+    onClickDay: (name: string, item: IViewDate) => void;
+}
+
+export default function Calendar({ name, onClickDay }: ICalendar) {
     const date = new Date();
+    const _today = getToday();
+
     const [viewDate, setViewData] = useState<IInfomationViewDate[]>([]);
 
     const [year, setYear] = useState(date.getFullYear());
     const [month, setMonth] = useState(date.getMonth() + 1);
-    const [today, setToday] = useState(
-        String(date.getFullYear()) +
-            String(date.getMonth() + 1).padStart(2, "0") +
-            String(date.getDate()).padStart(2, "0")
-    );
+    const [today, setToday] = useState(_today.full);
 
     /**이전달(왼쪽)으로 이동하기*/
     const onClickPrev = () => {
@@ -36,6 +40,10 @@ export default function Calendar() {
         } else {
             setMonth((prev) => prev + 1);
         }
+    };
+
+    const handleClickDay = (item: IViewDate) => {
+        onClickDay(name, item);
     };
 
     useEffect(() => {
@@ -98,6 +106,7 @@ export default function Calendar() {
                 <div className="calendar-grid">
                     {viewDate.map((item) => (
                         <div
+                            onClick={() => handleClickDay(item)}
                             key={item.full}
                             className={classnames("day", {
                                 thisMonth: item.thisMonth,
