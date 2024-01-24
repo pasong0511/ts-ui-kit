@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Calendar from "./Calendar";
+import ToggleSwitch from "../button/ToggleSwitch";
 
 const DatePicker = () => {
     const [displayToCalendar, setDisplayToCalendar] = useState<boolean>(false);
@@ -10,7 +11,8 @@ const DatePicker = () => {
 
     return (
         <div>
-            <button onClick={toggleDisplayToCalendar}>todate</button>
+            {/* <button onClick={toggleDisplayToCalendar}>todate</button> */}
+            <ToggleSwitch />
             <div style={{ display: "flex" }}>
                 <Calendar />
                 {displayToCalendar && <Calendar />}
