@@ -4,15 +4,15 @@ import Star from "./Star";
 import "./StarRating.css";
 
 const StarRating = () => {
-    const [rating, setRating] = useState(0);
-    const [isDragging, setIsDragging] = useState(false);
+    const [rating, setRating] = useState<number>(0);
+    const [isDragging, setIsDragging] = useState<boolean>(false);
 
     const starContainerRef = useRef<HTMLDivElement>(null);
     const starWrapperSize = 400;
     const startCount = 5;
     const starWidth = starWrapperSize / startCount; // 한 별의 너비
 
-    const calculateRating = (e) => {
+    const calculateRating = (e: React.MouseEvent<HTMLDivElement>): number => {
         const { left } = starContainerRef.current.getBoundingClientRect();
         const starIndex = Math.floor((e.pageX - left) / starWidth); //별 인덱스
         const starOffset = (e.pageX - left) % starWidth; //별 왼쪽 끝부터 별의 오른쪽 마진끝까지 위치
@@ -24,8 +24,7 @@ const StarRating = () => {
         return starIndex + (isOverHalf ? 1 : 0.5);
     };
 
-    const handleMouseMove = (e) => {
-        console.log(e.buttons);
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
         if (e.buttons === 0) {
             setIsDragging(false);
             return;
@@ -36,7 +35,7 @@ const StarRating = () => {
         }
     };
 
-    const handleMouseDown = (e) => {
+    const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
         setIsDragging(true);
         const newRating = calculateRating(e);
         setRating(newRating);
