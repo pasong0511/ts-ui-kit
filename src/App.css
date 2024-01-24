@@ -1,6 +1,6 @@
 :root {
-    --calendar-size-width: 700px;
-    --calendar-size-hight: 200px;
+    --calendar-size-width: 400px;
+    --calendar-size-hight: 350px;
 }
 
 .calendar {
